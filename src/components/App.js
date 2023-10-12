@@ -1,11 +1,11 @@
 import React from 'react';
-import './App.css';
+import logo from '../images/logo.svg'
 
 function App() {
   return (
     <div className="page">
         <header className="header">
-            <a href="/" className="header__logo"><img src="<%=require('./images/logo.svg')%>" alt="Место - Россия" className="header__logo-image" /></a>
+            <a href="/" className="header__logo"><img src={logo} alt="Место - Россия" className="header__logo-image" /></a>
         </header>
         <main className="content">
             <section className="profile">
