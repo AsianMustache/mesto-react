@@ -1,39 +1,14 @@
 import React from 'react';
-import logo from '../images/logo.svg'
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
 function App() {
   return (
     <div className="page">
-        <header className="header">
-            <a href="/" className="header__logo"><img src={logo} alt="Место - Россия" className="header__logo-image" /></a>
-        </header>
-        <main className="content">
-            <section className="profile">
-                <button id="profile-avatar" className="profile__avatar" ></button>
-                <div className="profile__info">
-                  <h1 id="profile-name" className="profile__info-name"></h1>
-                  <p id="profile-description" className="profile__info-description"></p>
-                  <button type="button" className="profile__info-edit-button"><img src="<%=require('./images/editButton.svg')%>" className="profile__info-edit-button-image" alt="Редактирование кнопка" /></button>
-                </div>
-                <button type="button" className="profile__add-button"><img src="<%=require('./images/plus.svg')%>" alt="Добавление" className="profile__add-button-image" /></button>
-              </section>
-            <section className="elements">
-            <template id="template-elements">
-                <article className="element">
-                    <button type="button" className="element__delete-button"><img className="element__image-delete" src="<%=require('./images/Trash.svg')%>" alt="Кнопка удаления" /></button>
-                    <img className="element__image" />
-                    <div className="element__group">
-                        <h2 className="element__group-title"></h2>
-                        <button type="button" className="element__group-button"><img className="element__group-favorite" alt="Избранное" src="<%=require('./images/favorite.svg')%>"/></button>
-                    </div>
-                    <span id="element__likes" className="element__likes"></span>
-                </article>
-            </template>
-            </section>
-        </main>
-        <footer className="footer" aria-label="Подвал сайта">
-            <p className="footer__copyright">© 2023 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
         <div className="popup popup_form_edit">
             <div className="popup-container">
                 <button type="button" className="popup-container__close-button popup-close"></button>
