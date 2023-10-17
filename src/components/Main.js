@@ -4,7 +4,7 @@ import plus from '../images/plus.svg';
 import api from "../utils/Api";
 import Card from "./Card";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
     const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');
@@ -44,7 +44,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
             <section className="elements">
             {cards.map((card, index) => {
                 return (
-                <Card card={card} key={index} />
+                <Card card={card} key={index} onCardClick={onCardClick} />
                 )
             })}
             </section>

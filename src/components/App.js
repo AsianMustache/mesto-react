@@ -10,6 +10,7 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null)
 
     const handleEditProfileClick = () => {
         setIsEditProfilePopupOpen(true);
@@ -23,10 +24,16 @@ function App() {
         setIsEditAvatarPopupOpen(true);
     }
 
+    
+    function handleCardClick(card) {
+        setSelectedCard(card);
+    }
+
     function closeAllPopups() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
+        setSelectedCard(null);
     }
 
     useEffect(() => {
@@ -56,7 +63,9 @@ function App() {
         <Header />
         <Main onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick} />
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <Footer />
         <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
             <label className="popup__label">
