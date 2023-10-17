@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import edit from '../images/editButton.svg';
 import plus from '../images/plus.svg';
-import trash from '../images/Trash.svg';
-import like from '../images/favorite.svg';
 import api from "../utils/Api";
+import Card from "./Card";
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
     const [userName, setUserName] = useState('');
@@ -44,16 +43,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
               </section>
             <section className="elements">
             {cards.map((card, index) => {
-                return(
-                <article className="element" key={index}>
-                    <button type="button" className="element__delete-button"><img className="element__image-delete" src={trash} alt="Кнопка удаления" /></button>
-                    <img className="element__image" style={{ backgroundImage: `url(${card.link})` }} alt={card.name}/>
-                    <div className="element__group">
-                        <h2 className="element__group-title">{card.name}</h2>
-                        <button type="button" className="element__group-button"><img className="element__group-favorite" alt="Избранное" src={like} /></button>
-                    </div>
-                    <span id="element__likes" className="element__likes">{card.likes.length}</span>
-                </article>)
+                return (
+                <Card card={card} key={index} />
+                )
             })}
             </section>
         </main>
