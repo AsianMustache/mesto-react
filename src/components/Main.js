@@ -5,7 +5,7 @@ import api from "../utils/Api";
 import Card from "./Card";
 import { useContext } from "react";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike }) {
     // const [userName, setUserName] = useState('');
     // const [userDescription, setUserDescription] = useState('');
     // const [userAvatar, setUserAvatar] = useState('');
@@ -46,7 +46,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
             <section className="elements">
             {cards.map((card, index) => {
                 return (
-                <Card card={card} key={card._id} onCardClick={onCardClick} />
+                <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={card} />
                 )
             })}
             </section>

@@ -31,6 +31,16 @@ function App() {
         setSelectedCard(card);
     }
 
+    function handleCardLike(card) {
+        // Снова проверяем, есть ли уже лайк на этой карточке
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        
+        // Отправляем запрос в API и получаем обновлённые данные карточки
+        api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        });
+    }
+
     function closeAllPopups() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
@@ -75,10 +85,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
             <Header />
-            <Main onEditProfile={handleEditProfileClick}
+            <Main cards={cards} onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
                 onEditAvatar={handleEditAvatarClick}
-                onCardClick={handleCardClick} />
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
             <Footer />
             <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
