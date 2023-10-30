@@ -4,14 +4,18 @@ import like from '../images/favorite.svg';
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     function handleClick() {
         onCardClick(card);
     }
 
-    function handleLikeClick () {
+    function handleLikeClick() {
         onCardLike(card);
     };
+
+    function handleDeleteClick() {
+        onCardDelete(card)
+    }
 
     const currentUser = useContext(CurrentUserContext);
     const isOwn = card.owner._id === currentUser._id;
@@ -21,7 +25,7 @@ function Card({ card, onCardClick, onCardLike }) {
     );
     return(
         <article className="element">
-             {isOwn && <button type="button" className="element__delete-button"><img className="element__image-delete" src={trash} alt="Кнопка удаления" /></button>}
+             {isOwn && <button type="button" className="element__delete-button" onClick={handleDeleteClick}><img className="element__image-delete" src={trash} alt="Кнопка удаления" /></button>}
             <img className="element__image" style={{ backgroundImage: `url(${card.link})` }} src={card.link} alt={card.name} onClick={handleClick} />
             <div className="element__group">
                 <h2 className="element__group-title">{card.name}</h2>

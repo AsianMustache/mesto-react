@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -43,11 +44,32 @@ function App() {
         });
     }
 
+    function handleCardDelete(card) {
+        api.deleteCardApi(card._id)
+            .then(() => {
+                setCards((prevState) => prevState.filter((c) => c._id !== card._id));
+            })
+            .catch((err) => {
+                console.log('Ошибка: ', err);
+            })
+    }
+
     function closeAllPopups() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
         setSelectedCard(null);
+    }
+
+    function handleUpdateUser({ name, about }) {
+        api.editApiProfile(name, about)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('Ошибка:', err);
+      });
     }
 
     useEffect(() => {
@@ -92,19 +114,13 @@ function App() {
                 onEditAvatar={handleEditAvatarClick}
                 onCardClick={handleCardClick}
                 onCardLike={handleCardLike}
-                setCards={setCards} />
+                setCards={setCards} 
+                onCardDelete={handleCardDelete} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
             <Footer />
-            <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
-                <label className="popup__label">
-                    <input type="text" id="name" name="name" value="Жак-Ив Кусто" readOnly placeholder="Введите имя" className="edit-form__text edit-form__text_input_name popup__input" minLength="2" maxLength="40" required />
-                    <span className="name-error popup__input-error"></span>
-                </label>
-                <label className="popup__label">
-                    <input type="text" id="description"  name="description" placeholder="Введите профессию" value="Исследователь океана" readOnly className="edit-form__text edit-form__text_input_description popup__input" minLength="2" maxLength="200" required />
-                    <span className="description-error popup__input-error"></span>
-                </label>
-            </PopupWithForm>
+            
+            <EditProfilePopup onUpdateUser={handleUpdateUser} isEditProfilePopupOpen={isEditProfilePopupOpen} closeAllPopups={closeAllPopups} />
+
 
             <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText="Добавить">
                 <label className="popup__label">
