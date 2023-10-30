@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import edit from '../images/editButton.svg';
 import plus from '../images/plus.svg';
 import api from "../utils/Api";
@@ -6,8 +6,8 @@ import Card from "./Card";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike }) {
-    const [cards, setCards] = useState([]);
+function Main({ cards, setCards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike }) {
+    
     const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {

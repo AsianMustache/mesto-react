@@ -91,7 +91,8 @@ function App() {
                 onAddPlace={handleAddPlaceClick}
                 onEditAvatar={handleEditAvatarClick}
                 onCardClick={handleCardClick}
-                onCardLike={handleCardLike} />
+                onCardLike={handleCardLike}
+                setCards={setCards} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
             <Footer />
             <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
