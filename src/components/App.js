@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import api from '../utils/Api';
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -13,6 +14,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
+    const [cards, setCards] = useState([]);
 
     const handleEditProfileClick = () => {
         setIsEditProfilePopupOpen(true);
@@ -36,7 +38,7 @@ function App() {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
         
         // Отправляем запрос в API и получаем обновлённые данные карточки
-        api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+        api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
             setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
         });
     }
@@ -72,7 +74,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        api.getUserInfo()
+        api.getApiUserInfo()
             .then((userData) => {
                 setCurrentUser(userData);
             })

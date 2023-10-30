@@ -2,6 +2,7 @@ import React from "react";
 import trash from '../images/Trash.svg';
 import like from '../images/favorite.svg';
 import { useContext } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike }) {
     function handleClick() {
@@ -16,9 +17,8 @@ function Card({ card, onCardClick, onCardLike }) {
     const isOwn = card.owner._id === currentUser._id;
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     const cardLikeButtonClassName = ( 
-        `element__group-button ${isLiked ? 'element__group-button_active' : ''}`
-    );; 
-
+        `element__group-favorite ${isLiked ? 'element__group-favorite_active' : ''}`
+    );
     return(
         <article className="element">
              {isOwn && <button type="button" className="element__delete-button"><img className="element__image-delete" src={trash} alt="Кнопка удаления" /></button>}

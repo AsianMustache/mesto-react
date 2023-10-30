@@ -4,24 +4,13 @@ import plus from '../images/plus.svg';
 import api from "../utils/Api";
 import Card from "./Card";
 import { useContext } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike }) {
-    // const [userName, setUserName] = useState('');
-    // const [userDescription, setUserDescription] = useState('');
-    // const [userAvatar, setUserAvatar] = useState('');
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike }) {
     const [cards, setCards] = useState([]);
     const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {
-        // api.getApiUserInfo()
-        //     .then((data) => {
-        //         setUserName(data.name);
-        //         setUserDescription(data.about);
-        //         setUserAvatar(data.avatar);
-        //     })
-        //     .catch((err) => {
-        //         console.log('Ошибка:', err);
-        //     });
 
     api.getAllCards()
         .then((data) => {
@@ -46,7 +35,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
             <section className="elements">
             {cards.map((card, index) => {
                 return (
-                <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={card} />
+                <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={onCardLike} />
                 )
             })}
             </section>
