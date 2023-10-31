@@ -1,25 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import edit from '../images/editButton.svg';
 import plus from '../images/plus.svg';
-import api from "../utils/Api";
 import Card from "./Card";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Main({ cards, setCards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
+function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
     
     const currentUser = useContext(CurrentUserContext);
-
-    useEffect(() => {
-
-    api.getAllCards()
-        .then((data) => {
-            setCards(data);
-        })
-        .catch((err) => {
-            console.log('Ошибка:', err);
-        });
-    }, []);
 
     return(
         <main className="content">
