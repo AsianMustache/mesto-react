@@ -8,6 +8,7 @@ import ImagePopup from "./ImagePopup";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -72,6 +73,17 @@ function App() {
       });
     }
 
+    function handleUpdateAvatar(newAvatar) {
+        api.editAvatar(newAvatar.avatar)
+        .then((res) => {
+            setCurrentUser({...currentUser, avatar: res.avatar});
+            closeAllPopups();
+        })
+        .catch((err) => {
+            console.log('Ошибка:', err);
+          });
+    }
+
     useEffect(() => {
         function handleEscClose(event) {
             if (event.key === 'Escape') {
@@ -133,12 +145,7 @@ function App() {
                 </label>
             </PopupWithForm>
 
-            <PopupWithForm name="edit-avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
-                <label className="popup__label">
-                    <input type="url" name="url" id="url-avatar" placeholder="Ссылка на аватар" className="avatar-edit-form__input-url popup__input" required />
-                    <span className="url-avatar-error popup__input-error"></span>
-                </label>
-            </PopupWithForm>
+            <EditAvatarPopup isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
             <PopupWithForm name="delete" title="Удаление">
                 <button type="button" className="popup-container__close-button popup-close"></button>
