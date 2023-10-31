@@ -12,6 +12,8 @@ function AddPlacePopup({isAddPlacePopupOpen, closeAllPopups, onAddPlace}) {
             name: nameRef.current.value,
             link: linkRef.current.value
         })
+        nameRef.current.value = '';
+        link: linkRef.current.value = '';
     }
 
     return(

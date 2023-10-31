@@ -6,10 +6,10 @@ function EditAvatarPopup({isEditAvatarPopupOpen, closeAllPopups, onUpdateAvatar 
 
     function handleSubmit(e) {
         e.preventDefault();
-
         onUpdateAvatar({
             avatar: avatarRef.current.value,
-        })
+        });
+        avatarRef.current.value = '';
     }
 
 

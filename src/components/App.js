@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from "./PopupWithForm";
+
 import ImagePopup from "./ImagePopup";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -18,6 +19,9 @@ function App() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
     const [cards, setCards] = useState([]);
+    const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+    const [cardToDelete, setCardToDelete] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const handleEditProfileClick = () => {
         setIsEditProfilePopupOpen(true);
@@ -36,6 +40,18 @@ function App() {
         setSelectedCard(card);
     }
 
+    function handleDeletePopupClick(card) {
+        setIsDeletePopupOpen(true);
+        setCardToDelete(card)
+    }
+
+    function handleConfirmDelete() {
+        if(cardToDelete) {
+            handleCardDelete(cardToDelete);
+        }
+        setIsDeletePopupOpen(false);
+    }
+
     function handleCardLike(card) {
         // Снова проверяем, есть ли уже лайк на этой карточке
         const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -50,9 +66,11 @@ function App() {
         api.deleteCardApi(card._id)
             .then(() => {
                 setCards((prevState) => prevState.filter((c) => c._id !== card._id));
+                setIsDeleting(false);
             })
             .catch((err) => {
                 console.log('Ошибка: ', err);
+                setIsDeleting(false);
             })
     }
 
@@ -150,7 +168,8 @@ function App() {
                 onCardClick={handleCardClick}
                 onCardLike={handleCardLike}
                 setCards={setCards} 
-                onCardDelete={handleCardDelete} />
+                onCardDelete={handleCardDelete} 
+                onDeletePopupClick={handleDeletePopupClick} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
             <Footer />
             
@@ -160,11 +179,7 @@ function App() {
 
             <EditAvatarPopup isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-            <PopupWithForm name="delete" title="Удаление">
-                <button type="button" className="popup-container__close-button popup-close"></button>
-                <h2 className="popup-container__title-delete">Вы уверены?</h2>
-                <button type="button" className="popup-container__delete-button popup__button">Да</button>
-            </PopupWithForm>
+            <DeleteCardPopup isDeletePopupOpen={isDeletePopupOpen} closeAllPopups={closeAllPopups} onConfirmDelete={handleConfirmDelete} card={cardToDelete} isDeleting={isDeleting} />
 
             <ImagePopup />
 

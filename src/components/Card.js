@@ -4,7 +4,7 @@ import like from '../images/favorite.svg';
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+function Card({ card, onCardClick, onCardLike, onDeletePopupClick }) {
     function handleClick() {
         onCardClick(card);
     }
@@ -14,7 +14,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     };
 
     function handleDeleteClick() {
-        onCardDelete(card)
+        onDeletePopupClick(card)
     }
 
     const currentUser = useContext(CurrentUserContext);
