@@ -12,7 +12,7 @@ function EditProfilePopup({ isEditProfilePopupOpen, closeAllPopups, onUpdateUser
             setName(currentUser.name);
             setDescription(currentUser.about);
           }
-        }, [currentUser]);
+        }, [currentUser, isEditProfilePopupOpen]);
 
     function handleNameChange(e) {
         setName(e.target.value);

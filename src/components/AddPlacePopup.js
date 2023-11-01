@@ -1,9 +1,16 @@
-import React, {useRef} from "react";
+import React, {useRef, useEffect} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({isAddPlacePopupOpen, closeAllPopups, onAddPlace}) {
     const nameRef = useRef();
     const linkRef = useRef();
+
+    useEffect(() => {
+        if (!isAddPlacePopupOpen) {
+            nameRef.current.value = '';
+            linkRef.current.value = '';
+        }
+    }, [isAddPlacePopupOpen]);
     
     function handleSubmit(e) {
         e.preventDefault();
@@ -12,8 +19,6 @@ function AddPlacePopup({isAddPlacePopupOpen, closeAllPopups, onAddPlace}) {
             name: nameRef.current.value,
             link: linkRef.current.value
         })
-        nameRef.current.value = '';
-        link: linkRef.current.value = '';
     }
 
     return(

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -57,8 +56,12 @@ function App() {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
         
         // Отправляем запрос в API и получаем обновлённые данные карточки
-        api.changeLikeStatus(card._id, !isLiked).then((newCard) => {
+        api.changeLikeStatus(card._id, !isLiked)
+        .then((newCard) => {
             setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        })
+        .catch((err) => {
+            console.log('Ошибка: ', err);
         });
     }
 
@@ -70,14 +73,17 @@ function App() {
             })
             .catch((err) => {
                 console.log('Ошибка: ', err);
-                setIsDeleting(false);
             })
+            .finally(() => {
+            setIsDeleting(false);
+        });
     }
 
     function closeAllPopups() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
+        setIsDeletePopupOpen(false);
         setSelectedCard(null);
     }
 
@@ -180,8 +186,6 @@ function App() {
             <EditAvatarPopup isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
             <DeleteCardPopup isDeletePopupOpen={isDeletePopupOpen} closeAllPopups={closeAllPopups} onConfirmDelete={handleConfirmDelete} card={cardToDelete} isDeleting={isDeleting} />
-
-            <ImagePopup />
 
         </div>
     </CurrentUserContext.Provider>
